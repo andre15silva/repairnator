@@ -153,7 +153,7 @@ public class GatherTestInformation extends AbstractStep {
                                 }
 
                                 this.failureNames.add(failureType);
-                                FailureType typeTof = new FailureType(failureType, testCase.getFailureMessage(), testCase.hasError());
+                                FailureType typeTof = new FailureType(failureType, testCase.getFailureDetail(), testCase.hasError());
                                 FailureLocation failureLocation = null;
 
                                 for (FailureLocation location : this.failureLocations) {
@@ -167,12 +167,11 @@ public class GatherTestInformation extends AbstractStep {
                                     failureLocation = new FailureLocation(testCase.getFullClassName());
                                     this.failureLocations.add(failureLocation);
                                 }
-                                failureLocation.addFailure(typeTof);
 
                                 if (testCase.hasError()) {
-                                    failureLocation.addErroringMethod(testCase.getName());
+                                    failureLocation.addErroringMethod(testCase.getName(), typeTof);
                                 } else {
-                                    failureLocation.addFailingMethod(testCase.getName());
+                                    failureLocation.addFailingMethod(testCase.getName(), typeTof);
                                 }
 
                                 if (!this.skipSettingStatusInformation) {
